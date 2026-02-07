@@ -1,0 +1,30 @@
+services:
+  backend:
+    #image: backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: backend
+    networks:
+      - app-network
+    environment:
+      NODE_ENV: production
+    ports:
+      - 4000:4000
+  frontend:
+    #image: frontend
+    build:
+      context: ./client2
+      dockerfile: Dockerfile
+    container_name: frontend
+    networks:
+      - app-network
+    environment:
+      NODE_ENV: production
+      API_URL: http://backend:4000
+    ports:
+      - 80:80
+
+networks:
+  app-network:
+    driver: bridge
